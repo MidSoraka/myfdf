@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 13:15:25 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/15 01:20:33 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/15 01:51:57 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	get_color(int x, int y, t_prm *prm)
 		height = prm->coord[temp_y][temp_x][2];
 	prm->min_height = abs(prm->min_height);
 	prm->max_height = abs(prm->max_height);
-	printf("min is %d\n max is %d\n\n",  prm->min_height, prm->max_height);
-	printf("height is %f\n", height);
+	//printf("min is %d\n max is %d\n\n",  prm->min_height, prm->max_height);
+	//printf("height is %f\n", height);
 	height = height + prm->min_height;
 	height = height / (prm->min_height + prm->max_height);
 	prm->color = 0;

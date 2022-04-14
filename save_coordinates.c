@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 13:45:20 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/15 01:06:08 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/15 01:51:44 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ static int	str_to_int(char *str, t_prm *prm, t_fdf *head)
 	while (ft_isdigit(str[index]) == 1 || (index == 0 && str[index] == '-'))
 		index++;
 	if ((index > 3 && str[0] != '-') || (str[0] == '-' && index > 4))
-		free_all(prm, head, "error", TRUE);
+	{
+		free_fdf(head);
+		ft_putendl("error");
+		exit(0);
+	}
 	index = ft_atoi(str);
-	if (str[0] == '-')
-		printf("index is %d\n\n\n\n\n", index); // remove
+//	if (str[0] == '-')
+//		printf("index is %d\n\n\n\n\n", index); // remove
 	return (index);
 }
 
