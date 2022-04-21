@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 13:15:25 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/15 01:51:57 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/21 14:01:45 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ void	get_color(int x, int y, t_prm *prm)
 		temp_y++;
 	if (temp_x == 0)
 		temp_x++;
-	height = prm->coord[temp_y - 1][temp_x - 1][2];
-	if (prm->coord[temp_y + y][temp_x + x][2] > height)
-		height = prm->coord[temp_y + y][temp_x + x][2];
-	if (prm->coord[temp_y][temp_x][2] > height)
-		height = prm->coord[temp_y][temp_x][2];
+	height = prm->coord[temp_y - 1][temp_x - 1][Z];
+	if (prm->coord[temp_y + y][temp_x + x][Z] > height)
+		height = prm->coord[temp_y + y][temp_x + x][Z];
+	if (prm->coord[temp_y][temp_x][Z] > height)
+		height = prm->coord[temp_y][temp_x][Z];
 	prm->min_height = abs(prm->min_height);
 	prm->max_height = abs(prm->max_height);
-	//printf("min is %d\n max is %d\n\n",  prm->min_height, prm->max_height);
-	//printf("height is %f\n", height);
 	height = height + prm->min_height;
 	height = height / (prm->min_height + prm->max_height);
 	prm->color = 0;
@@ -82,4 +80,38 @@ void	rotation_matrices(int *vector3, t_prm *prm)
 	vector3[0] = (v3[0] * cos(beta)) + (v3[1] * 0) + (v3[2] * -sin(beta));
 	vector3[2] = (v3[0] * 0) + (v3[1] * 1) + (v3[2] * 0);
 	vector3[1] = (v3[0] * sin(beta)) + (v3[1] * 0) + (v3[2] * cos(beta));
+}
+
+int	clamp_max_min_z(int nb)
+{
+	if (nb > 127)
+		nb = 127;
+	if (nb < -128)
+		nb = -128;
+	return (nb);
+}
+
+void	get_extremes(t_prm *prm, int x, int y)
+{
+	if (x == 0 && y == 0)
+	{
+		prm->x_extremes[0] = prm->coord_copy[y][x][X];
+		prm->y_extremes[0] = prm->coord_copy[y][x][Y];
+		prm->z_extremes[0] = prm->coord_copy[y][x][Z];
+		prm->x_extremes[1] = prm->coord_copy[y][x][X];
+		prm->y_extremes[1] = prm->coord_copy[y][x][Y];
+		prm->z_extremes[1] = prm->coord_copy[y][x][Z];
+	}
+	if (prm->x_extremes[0] > prm->coord_copy[y][x][X])
+		prm->x_extremes[0] = prm->coord_copy[y][x][X];
+	if (prm->x_extremes[1] < prm->coord_copy[y][x][X])
+		prm->x_extremes[1] = prm->coord_copy[y][x][X];
+	if (prm->y_extremes[0] > prm->coord_copy[y][x][Y])
+		prm->y_extremes[0] = prm->coord_copy[y][x][Y];
+	if (prm->y_extremes[1] < prm->coord_copy[y][x][Y])
+		prm->y_extremes[1] = prm->coord_copy[y][x][Y];
+	if (prm->z_extremes[0] > prm->coord_copy[y][x][Z])
+		prm->z_extremes[0] = prm->coord_copy[y][x][Z];
+	if (prm->z_extremes[1] < prm->coord_copy[y][x][Z])
+		prm->z_extremes[1] = prm->coord_copy[y][x][Z];
 }

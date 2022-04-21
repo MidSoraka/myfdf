@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:50:42 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/13 21:20:39 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/21 14:26:26 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ static void	image_functions(int *triangle, t_prm *prm)
 
 void	fill_image(t_prm *prm)
 {
-	int	x;
-	int	y;
 	int	triangle[9];
 
 	prm->xyz[0][Y] = 0;

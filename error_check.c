@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 01:29:29 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/14 21:29:59 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/21 14:28:03 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,20 @@ static int	line_parser(char *str)
 	}
 	if (index <= 1)
 		return (-1);
-	else
-		return (x);
+	if (index > 0)
+		index--;
+	if (!(ft_isdigit(str[index])))
+		return (-1);
+	return (x);
 }
 
-static void	elem_parser(t_prm *prm, t_fdf *head)
+void	error_check(t_prm *prm)
 {
 	t_fdf	*elem;
 	int		last_index;
 	int		index;
-	char	ch;
 
-	elem = head;
+	elem = prm->head;
 	index = 0;
 	last_index = -1;
 	while (elem)
@@ -53,17 +55,9 @@ static void	elem_parser(t_prm *prm, t_fdf *head)
 		if (last_index == -1)
 			last_index = index;
 		if (last_index != index || index < 0)
-			free_all(NULL, head, "error", TRUE);
+			exit_window(prm, "error", TRUE);
 		elem = elem->next;
 	}
-	if (!head->next || index < 2)
-		free_all(NULL, head, "error", TRUE);
-}
-
-void	error_check(t_prm *prm, t_fdf *head)
-{
-	t_fdf	*elem;
-
-	elem = head;
-	elem_parser(prm, head);
+	if (!prm->head->next || index < 2)
+		exit_window(prm, "error", TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:42:41 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/15 01:49:42 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/19 13:46:49 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,23 @@ void	free_fdf(t_fdf *head)
 {
 	t_fdf	*hold;
 
+	if (head->line)
+		free(head->line);
+	head = head->next;
 	while (head)
 	{
 		hold = head->next;
-		free(head->line);
+		if (head->line)
+			free(head->line);
 		free(head);
 		head = hold;
 	}
-	free(head);
 }
 
-void	free_all(t_prm *prm, t_fdf *head, char *error_msg, BOOL error)
+void	exit_window(t_prm *prm, char *error_msg, BOOL error)
 {
-	if (prm)
-		free_prm(prm);
-	if (head)
-		free_fdf(head);
+	if (prm->head)
+		free_fdf(prm->head);
 	if (error == TRUE && error_msg)
 		ft_putendl(error_msg);
 	exit(0);

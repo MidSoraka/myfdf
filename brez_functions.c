@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 14:19:14 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/15 01:13:44 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/21 14:23:51 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ static void	brez_while(t_prm *prm)
 		if (pic_size < prm->win_x * prm->win_y && pic_size > 0)
 		{
 			if (prm->xyz[0][Z] < prm->z_buffer[pic_size] && \
-			prm->xyz[1][X] <= prm->win_x && prm->xyz[1][X] >= 0)
+			prm->xyz[1][X] < prm->win_x && prm->xyz[1][X] >= 0)
 			{
+				if (prm->colorwhite == 1)
+					prm->color = INT_MAX;
 				prm->z_buffer[pic_size] = prm->xyz[0][Z];
 				((unsigned int *)prm->mlx->image_add)[pic_size] = prm->color;
 			}

@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:40:32 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/14 02:38:36 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/21 11:46:24 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	scaling_keys(int key, t_prm *prm)
 	scale_y = prm->xyz[0][Y] * prm->scale_xyz[1];
 	if (key == KEY_PLUS)
 	{
-		if (scale_x < prm->win_x && scale_y < prm->win_y)
+		if (scale_x < prm->win_x * 2 && scale_y < prm->win_y * 2)
 		{
 			prm->scale_xyz[X] = prm->scale_xyz[X] + 2;
 			prm->scale_xyz[Y] = prm->scale_xyz[Y] + 2;
@@ -41,22 +41,24 @@ static void	scaling_keys(int key, t_prm *prm)
 
 static void	movement_keys(int key, t_prm *prm)
 {
-	if (key == KEY_DOWN)
+	if (key == KEY_DOWN && prm->alpha < 360)
 		prm->alpha += 5;
-	if (key == KEY_UP)
+	if (key == KEY_UP && prm->alpha > -360)
 		prm->alpha -= 5;
-	if (key == KEY_LEFT)
+	if (key == KEY_LEFT && prm->beta < 360)
 		prm->beta += 5;
-	if (key == KEY_RIGHT)
+	if (key == KEY_RIGHT && prm->beta > -360)
 		prm->beta -= 5;
-	if (key == KEY_X)
+	if (key == KEY_X && prm->loc_xyz[X] < prm->win_x * 2)
 		prm->loc_xyz[X] += 50;
-	if (key == KEY_C)
+	if (key == KEY_C && prm->loc_xyz[X] > -1 * prm->win_x)
 		prm->loc_xyz[X] -= 50;
-	if (key == KEY_Y)
+	if (key == KEY_Y && prm->loc_xyz[Y] < prm->win_y * 2)
 		prm->loc_xyz[Y] += 50;
-	if (key == KEY_U)
+	if (key == KEY_U && prm->loc_xyz[Y] > -1 * prm->win_y)
 		prm->loc_xyz[Y] -= 50;
+	if (key == KEY_ESC)
+		exit_window(prm, "error", FALSE);
 }
 
 static void	function_keys(int key, t_prm *prm)
@@ -67,9 +69,9 @@ static void	function_keys(int key, t_prm *prm)
 		prm->loc_xyz[Y] = 0;
 		prm->alpha = 0;
 		prm->beta = 0;
-		prm->scale_xyz[X] = 4;
-		prm->scale_xyz[Y] = 4;
-		prm->scale_xyz[Z] = 2;
+		prm->scale_xyz[X] = prm->scale_default[X];
+		prm->scale_xyz[Y] = prm->scale_default[Y];
+		prm->scale_xyz[Z] = prm->scale_default[Z];
 	}
 	if (key == KEY_F)
 	{
@@ -78,8 +80,13 @@ static void	function_keys(int key, t_prm *prm)
 		else
 			prm->isfill = 0;
 	}
-	if (key == KEY_ESC)
-		free_all(prm, NULL, "exit", FALSE);
+	if (key == KEY_W)
+	{
+		if (prm->colorwhite == 0)
+			prm->colorwhite = 1;
+		else
+			prm->colorwhite = 0;
+	}
 }
 
 int	mlx_window_loop(void *prm)

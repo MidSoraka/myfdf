@@ -6,73 +6,72 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:34:00 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/14 21:09:32 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/21 14:25:32 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static t_fdf	*new_list(t_fdf *head)
+static void	new_list(t_prm *prm, t_fdf *elem)
 {
-	t_fdf	*new;
-
-	new = malloc(sizeof(t_fdf));
-	if (new == NULL)
-	{
-		free_fdf(head);
-		exit (0);
-	}
-	new->next = NULL;
-	return (new);
+	elem->next = malloc(sizeof(t_fdf));
+	if (elem->next == NULL)
+		exit_window(prm, "error", TRUE);
+	elem->next->next = NULL;
 }
 
-static void	gnl_file(t_prm *prm, t_fdf *head, int fd)
+static void	copy_gnl_line(t_prm *prm, t_fdf *elem, char *line)
+{
+	elem->line = ft_strnew(ft_strlen(line));
+	if (elem->line == NULL)
+		exit_window(prm, "error", TRUE);
+	ft_strcpy(elem->line, line);
+	ft_bzero(line, ft_strlen(line));
+	free(line);
+	prm->xyz[0][X]++;
+}
+
+static void	gnl_file(t_prm *prm)
 {
 	int		gnl;
 	char	*line;
 	t_fdf	*elem;
 
 	gnl = 1;
-	prm->xyz[0][X] = 0;
-	elem = head;
-	prm->erdian = 1;
+	elem = prm->head;
 	while (gnl > 0)
 	{
-		gnl = get_next_line(fd, &line);
+		gnl = get_next_line(prm->fd, &line);
 		if (gnl > 0)
 		{
-			if (prm->erdian != 1)
-				elem->next = new_list(head);
-			if (prm->erdian != 1)
+			if (prm->xyz[0][X] != 0)
+				new_list(prm, elem);
+			if (prm->xyz[0][X] != 0)
 				elem = elem->next;
-			elem->line = ft_strnew(ft_strlen(line));
-			ft_strcpy(elem->line, line);
-			ft_bzero(line, ft_strlen(line));
-			free(line);
-			prm->erdian = 0;
-			prm->xyz[0][X]++;
+			copy_gnl_line(prm, elem, line);
 		}
 	}
+	if (elem == prm->head)
+		exit_window(prm, "error", TRUE);
 }
 
-void	read_file(t_prm *prm, int fd)
+void	read_file(t_prm *prm)
 {
-	t_fdf	*head;
-	t_fdf	*elem;
-	char	*line;
+	t_fdf	head;
 	int		gnl;
 
-	head = new_list(NULL);
-	elem = head;
+	head.next = NULL;
+	prm->head = &head;
 	gnl = 1;
 	prm->erdian = 1;
-	gnl_file(prm, head, fd);
-	error_check(prm, head);
+	prm->xyz[0][X] = 0;
+	gnl_file(prm);
+	error_check(prm);
 	prm->coord = (int ***)malloc((prm->xyz[0][X] + 1) * sizeof(int **));
 	prm->coord_copy = (int ***)malloc((prm->xyz[0][X] + 1) * sizeof(int **));
 	if (prm->coord == NULL || prm->coord_copy == NULL)
-		exit(0);
+		exit_window(prm, "error", TRUE);
 	prm->coord[prm->xyz[0][X]] = NULL;
 	prm->coord_copy[prm->xyz[0][X]] = NULL;
-	malloc_coordinates(prm, head);
+	malloc_coordinates(prm);
 }

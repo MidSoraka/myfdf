@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 13:20:32 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/08 16:36:53 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/21 14:26:53 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	swap_xyz(int *ptr1, int *ptr2)
 	ptr2[2] = temp[2];
 }
 
-static void	sort_triangle(int *triangle, t_prm *prm)
+static void	sort_triangle(int *triangle)
 {
 	if (triangle[1] > triangle[4])
 	{
@@ -54,7 +54,7 @@ void	triangle_coords(int x, int y, int *triangle, t_prm *prm)
 	triangle[6] = prm->coord_copy[prm->xyz[0][Y]][prm->xyz[0][X]][0];
 	triangle[7] = prm->coord_copy[prm->xyz[0][Y]][prm->xyz[0][X]][1];
 	triangle[8] = prm->coord_copy[prm->xyz[0][Y]][prm->xyz[0][X]][2];
-	sort_triangle(triangle, prm);
+	sort_triangle(triangle);
 	get_color(x, y, prm);
 	get_z_height(x, y, prm);
 }
