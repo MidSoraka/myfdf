@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:42:41 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/19 13:46:49 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/21 14:37:15 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ void	exit_window(t_prm *prm, char *error_msg, BOOL error)
 	if (prm->head)
 		free_fdf(prm->head);
 	if (error == TRUE && error_msg)
-		ft_putendl(error_msg);
+		ft_putendl_fd(error_msg, 2);
 	exit(0);
 }
