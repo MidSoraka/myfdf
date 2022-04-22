@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 15:20:06 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/14 22:19:11 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/22 10:16:38 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,7 @@ int		get_next_line(const int fd, char **line);
 int		ft_strchris(const char *s, int c, size_t n);
 
 char	*ft_realloc(char **ptr, size_t n);
+
+int		ft_isspace(char ch);
 
 #endif

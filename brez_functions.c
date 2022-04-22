@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 14:19:14 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/21 14:23:51 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/22 10:55:59 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	draw_line(t_prm *prm)
 {
 	t_brez	brez_var;
 
+	ft_bzero(&brez_var, sizeof(t_brez));
 	prm->xyz[1][X] = prm->xyz[1][X] + prm->loc_xyz[X];
 	prm->xyz[2][X] = prm->xyz[2][X] + prm->loc_xyz[X];
 	prm->xyz[1][Y] = prm->xyz[1][Y] + prm->loc_xyz[Y];

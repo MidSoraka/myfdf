@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 01:29:29 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/21 14:28:03 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/22 12:43:57 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,21 @@ static int	line_parser(char *str)
 
 	index = 0;
 	x = 0;
+	ch = 'a';
 	while (str[index] && index >= 0)
 	{
+		if (ch == '-' && ft_isdigit(str[index]) == 0)
+			index = -2;
 		ch = str[index];
-		if (!(ft_isdigit(ch) || ch == ' ' || ch == '-'))
+		if (ft_isdigit(ch) == 0 && ft_isspace(ch) == 0 && ch != '-')
 			index = -2;
-		if ((str[0] == ' ' || !ft_isdigit(str[0])) && str[0] != '-')
-			index = -2;
-		if (ch != ' ' && (index == 0 || str[index - 1] == ' '))
+		if (ft_isspace(ch) == 0 && (index == 0 || ft_isspace(str[index - 1])))
 			x++;
 		index++;
 	}
 	if (index <= 1)
 		return (-1);
-	if (index > 0)
-		index--;
-	if (!(ft_isdigit(str[index])))
+	if (ch == '-')
 		return (-1);
 	return (x);
 }

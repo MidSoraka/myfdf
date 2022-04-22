@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:34:00 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/21 14:25:32 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/22 12:07:00 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	read_file(t_prm *prm)
 	t_fdf	head;
 	int		gnl;
 
-	head.next = NULL;
+	ft_bzero(&head, sizeof(t_fdf));
 	prm->head = &head;
 	gnl = 1;
 	prm->erdian = 1;

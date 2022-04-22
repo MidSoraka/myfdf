@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 13:45:20 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/21 14:25:04 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/22 11:35:16 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ static void	set_coords(t_prm *prm, int z)
 
 static void	gnl_line_len(t_prm *prm, t_fdf *elem)
 {
-	int	index;
-	int	x;
-	int	y;
+	int		index;
+	int		x;
+	int		y;
+	char	ch;
 
 	x = prm->xyz[0][X];
 	y = prm->xyz[0][Y];
@@ -58,10 +59,12 @@ static void	gnl_line_len(t_prm *prm, t_fdf *elem)
 	x = 0;
 	while (elem->line[index])
 	{
+		ch = elem->line[index];
 		if (index > 0)
-			if ((elem->line[index - 1] != ' ' && elem->line[index] == ' ') || \
-			elem->line[index + 1] == '\0')
+			if (ft_isspace(ch) == 0 && ft_isspace(elem->line[index - 1]))
 				x++;
+		if (index == 0 && ft_isspace(ch) == 0)
+			x++;
 		index++;
 	}
 	prm->coord[y] = (int **)malloc((x + 1) * sizeof(int *));
@@ -74,20 +77,23 @@ static void	gnl_line_len(t_prm *prm, t_fdf *elem)
 
 static void	gnl_line_to_coords(t_prm *prm, t_fdf *elem)
 {
-	int	index;
+	int		index;
+	char	ch;
 
 	index = 0;
 	prm->xyz[0][X] = 0;
 	while (elem->line[index])
 	{
-		if (ft_isdigit(elem->line[index]) != 1 && elem->line[index] != ' ' && \
-		elem->line[index] != '-')
+		ch = elem->line[index];
+		if (ft_isdigit(ch) == 0 && ft_isspace(ch) == 0 && ch != '-')
 			exit_window(prm, "error", TRUE);
-		if (elem->line[index] != ' ' && (index == 0 || \
-		elem->line[index - 1] == ' '))
+		if (ft_isspace(ch) == 0)
 		{
-			set_coords(prm, str_to_int(&elem->line[index], prm));
-			prm->xyz[0][X]++;
+			if (index == 0 || ft_isspace(elem->line[index - 1]))
+			{
+				set_coords(prm, str_to_int(&elem->line[index], prm));
+				prm->xyz[0][X]++;
+			}
 		}
 		index++;
 	}

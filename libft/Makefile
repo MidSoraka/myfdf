@@ -6,7 +6,7 @@
 #    By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/03 04:52:26 by vlaine            #+#    #+#              #
-#    Updated: 2022/04/21 14:01:05 by vlaine           ###   ########.fr        #
+#    Updated: 2022/04/22 10:17:16 by vlaine           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c\
 	ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c\
 	ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c\
 	ft_tolower.c ft_toupper.c ft_topos.c ft_digits.c get_next_line.c\
-	ft_strchris.c ft_realloc.c
+	ft_strchris.c ft_realloc.c ft_isspace.c
 FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)

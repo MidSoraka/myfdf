@@ -6,7 +6,7 @@
 /*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 13:58:37 by vlaine            #+#    #+#             */
-/*   Updated: 2022/04/21 13:21:14 by vlaine           ###   ########.fr       */
+/*   Updated: 2022/04/22 12:56:10 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ typedef struct s_prm
 	int					isfill;
 	unsigned int		color;
 	unsigned int		colorwhite;
-	int					mid_x[2];
-	int					mid_y[2];
 }						t_prm;
 
 typedef struct s_brez_line
